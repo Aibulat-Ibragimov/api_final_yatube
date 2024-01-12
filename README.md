@@ -8,8 +8,15 @@
 ### **Технологии:**
 Python 3.7.0 <br>
 Django 3.2.16 <br>
-Visual Studio Code <br>
-Postman
+djoser 4.7.2 <br>
+pytest 6.2.4 <br>
+pytest-pythonpath 0.7.3 <br>
+pytest-django 4.4.0 <br>
+djangorestframework 3.12.4 <br>
+djangorestframework-simplejwt 4.7.2 <br>
+Pillow 9.3.0 <br>
+PyJWT 2.1.0 <br>
+requests 2.26.0 <br>
 ---
 
 ### **Как запустить проект:**

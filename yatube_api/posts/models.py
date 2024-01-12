@@ -25,6 +25,10 @@ class Post(models.Model):
         related_name='posts', blank=True, null=True
     )
 
+    # class Meta:
+    #     ordering = ('-pub_date')
+    # когда я использую ordering выходят ошибки
+
     def __str__(self):
         return self.text
 

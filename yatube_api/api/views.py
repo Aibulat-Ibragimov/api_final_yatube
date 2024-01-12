@@ -1,12 +1,13 @@
 from rest_framework.pagination import LimitOffsetPagination
 from django.shortcuts import get_object_or_404
-from rest_framework import permissions, filters, mixins, viewsets
+from rest_framework import permissions, filters, viewsets
+from rest_framework.exceptions import ValidationError
 
 from .serializers import (
     PostSerializer, GroupSerializer,
     CommentSerializer, FollowSerializer
 )
-from posts.models import Post, Group
+from posts.models import Post, Group, Follow
 from .permissions import OwnerOrReadOnly
 
 
@@ -40,9 +41,8 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, post=self.get_post())
 
 
-class FollowViewSet(mixins.CreateModelMixin,
-                    mixins.ListModelMixin,
-                    viewsets.GenericViewSet):
+class FollowViewSet(viewsets.ModelViewSet):
+    queryset = Follow.objects.all()
     serializer_class = FollowSerializer
     permission_classes = (permissions.IsAuthenticated,)
     filter_backends = (filters.SearchFilter,)
@@ -53,3 +53,10 @@ class FollowViewSet(mixins.CreateModelMixin,
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def validate_user(self, value):
+        if value != self.context['request'].user:
+            raise ValidationError(
+                'Вы можете создавать подписки только от своего имени'
+            )
+        return value
