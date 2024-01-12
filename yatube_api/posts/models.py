@@ -26,8 +26,7 @@ class Post(models.Model):
     )
 
     # class Meta:
-    #     ordering = ('-pub_date')
-    # когда я использую ordering выходят ошибки
+    #     ordering = ('pub_date')
 
     def __str__(self):
         return self.text
